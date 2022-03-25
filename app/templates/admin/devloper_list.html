@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+<div>
+    <section class="vh-100" style="background-color: rgb(238, 238, 238);">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">Devlopers List</h4>
+
+
+                            <table class="table mb-20">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N0.</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Manager Id</th>
+                                        <th scope="col">Upgrade To Manager</th>
+                                        <th scope="col">Assign To Manager</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for row in data %}
+                                    <tr>
+                                        <th scope="row"> {{ loop.index }}</th>
+                                        <td>{{row.Devloper.name}}</td>
+                                        <td>{{row.Devloper.email}}</td>
+                                        <td>{{row.Manager.email}}</td>
+                                        <td>
+                                            <a href="{{url_for('upgrade_devloper', devloper_id=row.Devloper.id)}}"
+                                                class=" btn text-dan  ger" data-mdb-toggle="tooltip"
+                                                title="Upgrade">Upgrade</a>
+
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="text-reset me-3 dropdown-toggle hidden-arrow btn " href="#"
+                                                    id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    select
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-end"
+                                                    aria-labelledby="navbarDropdownMenuLink">
+                                                    {%for manager in managers%}
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{url_for('assign_devloper_to', manager_id = manager.id,devloper_id=row.Devloper.id)}}">{{manager.email}}</a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock main %}
+
+<!-- Full screen modal -->

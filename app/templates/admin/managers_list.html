@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block main %}
+<div>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">Devlopers List</h4>
+
+
+                            <table class="table mb-20">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N0.</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Admin Id</th>
+                                        <th scope="col">Upgrade To Manager</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for row in data %}
+                                    <tr>
+                                        <th scope="row"> {{ loop.index }}</th>
+                                        <td>{{row.name}}</td>
+                                        <td>{{row.email}}</td>
+                                        <td>{{row.admin_id}}</td>
+                                        <td>
+                                            <a href="{{url_for('upgrade_manager', manager_id=row.id)}}"
+                                                class=" btn text-dan  ger" data-mdb-toggle="tooltip"
+                                                title="Upgrade">Upgrade</a>
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- Full screen modal -->
+{% endblock main %}

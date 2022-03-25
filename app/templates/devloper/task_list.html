@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+<div>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">Task List</h4>
+
+
+                            <table class="table mb-20">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N0.</th>
+                                        <th scope="col">Task Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">UpdateTaskStatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for row in data %}
+                                    <tr>
+                                        <th scope="row"> {{ loop.index }}</th>
+                                        <td>{{row.name}}</td>
+                                        <td>{{row.description}}</td>
+                                        <td>{{row.status}}</td>
+
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="text-reset me-3 dropdown-toggle hidden-arrow btn " href="#"
+                                                    id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    change status
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-end"
+                                                    aria-labelledby="navbarDropdownMenuLink">
+                                                    {%for status in lst_task%}
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{url_for('change_task_status', task_id = row.id, status=status)}}">{{status}}</a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- Full screen modal -->
+
+{% endblock main %}

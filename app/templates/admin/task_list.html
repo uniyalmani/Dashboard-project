@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block main %}
+<div>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">Task List</h4>
+
+                            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
+                                action="{{url_for('add_task')}}" method="Post">
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="text" id="form" class="form-control" name="name" />
+                                        <label class="form-label" for="form">task name</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="text" id="form1" class="form-control" name="description" />
+                                        <label class="form-label" for="form1">description</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
+                            </form>
+
+                            <table class="table mb-20">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N0.</th>
+                                        <th scope="col">Task Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Devloper_id</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for row in data %}
+                                    <tr>
+                                        <th scope="row"> {{ loop.index }}</th>
+                                        <td>{{row.name}}</td>
+                                        <td>{{row.description}}</td>
+                                        <td>{{row.status}}</td>
+                                        <td>{{row.devloper_id}}</td>
+                                        <td>
+                                            <form>
+                                                <a href="{{url_for('delete_task', task_id=row.id)}}" class="text-danger"
+                                                    data-mdb-toggle="tooltip" title="Delete Task"><i
+                                                        class="fas fa-trash-alt"></i></a>
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock main %}

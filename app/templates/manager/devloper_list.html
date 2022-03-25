@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+<div>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4">
+
+                            <h4 class="text-center my-3 pb-3">Devlopers Lists</h4>
+
+
+                            <table class="table mb-20">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N0.</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for row in devlopers %}
+                                    <tr>
+                                        <th scope="row"> {{ loop.index }}</th>
+                                        <td>{{row.name}}</td>
+                                        <td>{{row.email}}</td>
+
+                                    <tr>
+
+                                        {% endfor %}
+
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock main %}
