@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  mysql_db:
+    image: mysql:5.7
+    container_name: mysql_db
+    hostname: mysql_db
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=fynd123
+      - MYSQL_DATABASE=fynd_acad
+      - MYSQL_USER=fynd_acad
+      - MYSQL_PASSWORD=fynd123
+    ports:
+      - "3305:3306"
+    volumes:
+      - /home/nitin/fynd_acad/docker-data1:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "bash",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+      ]
+    environment:
+      - SECRET_KEY="qwertyuiopasdfghjklzxcvbnm12345"
+      - ALGORITHM="HS256"
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+    tty: true
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - mysql_db
+    ports:
+      - "8000:8000"
+      - "5678:5678"

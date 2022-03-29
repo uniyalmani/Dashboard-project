@@ -1,6 +1,11 @@
 fastapi
+gunicorn
 uvicorn 
 sqlmodel
 mysqlclient
-python-jose[cryptography]
 passlib[bcrypt]
+jinja2
+pyjwt
+python-multipart
+alembic
+itsdangerous

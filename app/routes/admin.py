@@ -21,7 +21,7 @@ templates = Jinja2Templates(directory="app/templates/admin")
 
 
 @router.get("/Admin/dashboard", tags=["admin_dashboard"], response_class=HTMLResponse)
-# @auth_required("Admin")
+@auth_required("Admin")
 def admin_dashboard(
     request: Request,
     decode_existing_token: Dict = Depends(get_decoded_token_data),
@@ -122,13 +122,10 @@ def admin_dashboard_devlopers(
     )
     manager_info = session.exec(query).all()
     email = decode_existing_token["email"]
-    print(manager_info, " *******************/")
-    # query = select(Manager)
-    # managers = session.exec(query).all()
+
     query = select(Manager)
     managers = session.exec(query).all()
-    # print(managers, "//////")
-    # print(devlopers)
+
     return templates.TemplateResponse(
         "devloper_list.html",
         context={
@@ -153,7 +150,6 @@ def upgrade_devloper(
     upgrading_devloper = session.exec(query).first()
     tasks_assigned = select(Task).where(devloper_id == Task.devloper_id)
     tasks = session.exec(tasks_assigned).all()
-    print(tasks)
     for task in tasks:
         task.devloper_id = None
         session.add(task)
@@ -180,7 +176,7 @@ def admin_dashboard_managers(
     email = decode_existing_token["email"]
     query = select(Manager)
     query_res = session.exec(query).all()
-    # return {"asd":"Yes"}
+
     return templates.TemplateResponse(
         "managers_list.html",
         context={"request": request, "data": query_res, "email": email},

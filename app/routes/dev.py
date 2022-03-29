@@ -9,6 +9,7 @@ from fastapi.responses import HTMLResponse
 from app.models.database_model import *
 from fastapi.responses import RedirectResponse
 from datetime import datetime
+import os
 from app.utilities.helper import (
     flash,
     get_flashed_messages,
@@ -79,9 +80,11 @@ async def devloper_signup_submit(
             )
             response = RedirectResponse("/Devloper/signup", status_code=303)
             return response
+            
         hashed_password: Dict[str] = hash_password(password)
         data = {"email": email, "role": "Devloper"}
-        token = create_jwt_token(data, 30)
+        time = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+        token = create_jwt_token(data, time)
 
         dev_entry = Devloper(name=name, email=email, password=hashed_password)
         session.add(dev_entry)

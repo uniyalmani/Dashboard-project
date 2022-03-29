@@ -15,6 +15,7 @@ from app.models import database_model
 from fastapi.responses import RedirectResponse
 from datetime import datetime
 import json
+import os
 
 
 router = APIRouter()
@@ -62,8 +63,8 @@ async def login_submit(
     session: dict = Depends(get_session),
 ):
     data = {"email": email, "role": role}
-
-    token = create_jwt_token(data, 120)
+    time = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+    token = create_jwt_token(data, time)
     model = getattr(database_model, role)
     query = select(model).where(model.email == email)
     user = session.exec(query).first()
@@ -72,7 +73,7 @@ async def login_submit(
         flash(request, "Email or Password is incorrect", "primary")
         return RedirectResponse(url, status_code=303)
     if verify_password(password, user.password):
-        print("verified")
+        
         response = RedirectResponse(f"/{role}/dashboard", status_code=303)
         response.set_cookie(key="auth-token", value=token)
         return response

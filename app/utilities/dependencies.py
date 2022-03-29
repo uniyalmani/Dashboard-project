@@ -12,5 +12,6 @@ def get_decoded_token_data(request: Request):
 
 
 def get_session():
+    """creating session for each request"""
     with Session(engine) as session:
         yield session

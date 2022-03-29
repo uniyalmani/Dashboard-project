@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Manager dashboard</title>
+    <link href="{{ url_for('static', path='/home.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
@@ -31,13 +32,16 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <h3>Fynd Devloper Dashboard</h3>
+                        <h3>Fynd Dashboard</h3>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('devloper_dashboard')}}">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('devloper_tasks')}}">Task</a>
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('devloper_signup')}}">Devloper Signup</a>
                     </li>
                 </ul>
                 <!-- Left links -->
@@ -46,27 +50,22 @@
 
             <!-- Right elements -->
 
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li>
-                    <a class="dropdown-item" href="#">{{email}}</a>
-                </li>
 
-                <li>
-                    <a class="dropdown-item" href="{{url_for('logout')}}">Logout</a>
-                </li>
-            </ul>
+            <!-- Notifications -->
+            <!-- Avatar -->
+
+
+
         </div>
         <!-- Right elements -->
         </div>
         <!-- Container wrapper -->
     </nav>
-
     {% block main %}
 
 
 
     {% endblock main %}
-
 
     <footer class="bg-light text-center text-white">
         <!-- Grid container -->

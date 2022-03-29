@@ -22,24 +22,28 @@ passlib_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # subclass JSONEncoder for jsonifing
 class DateTimeEncoder(JSONEncoder):
     # Override the default method
+    """jasonify time"""
     def default(self, obj):
         return obj.isoformat()
 
 
 # for verify password
 def verify_password(plain_password, hashed_password):
+    """verify password"""
     return passlib_context.verify(plain_password, hashed_password)
 
 
 # for hashing password
 def hash_password(password):
+    """hashing passaword for storing in data base"""
     return passlib_context.hash(password)
 
 
 # for creating jwt token
 def create_jwt_token(data: dict, expire_time):
+    """creating token for athurization"""
     to_encode = data.copy()
-    expire_at = datetime.utcnow() + timedelta(seconds=expire_time)
+    expire_at = datetime.utcnow() + timedelta(minutes=expire_time)
     x = DateTimeEncoder().encode({"to_encode": expire_at})
     to_encode.update({"expire_at": x})
     env = os.environ
@@ -51,6 +55,7 @@ def create_jwt_token(data: dict, expire_time):
 
 
 def decode_token(token):
+    """decoding token and return data"""
     try:
         env = os.environ
         data = jwt.decode(token, env.get("SECRET_KEY"), algorithms=["HS256"])
@@ -60,6 +65,7 @@ def decode_token(token):
 
 
 def validate_token_expiry(token_expiry_datetime):
+    """return token is exppured or not """
     token_expiry_datetime = datetime.strptime(
         token_expiry_datetime, "%Y-%m-%dT%H:%M:%S.%f"
     )
@@ -69,6 +75,7 @@ def validate_token_expiry(token_expiry_datetime):
 
 
 def is_valid_token(token):
+    """validating token if exist """
     if token:
         decoded_data = decode_token(token)
         if decoded_data:
@@ -81,11 +88,12 @@ def is_valid_token(token):
 
 
 def flash(request: Request, message: Any, category: str = "primary") -> None:
+    """setting flash massage for a session """
     if "_messages" not in request.session:
         request.session["_messages"] = []
         request.session["_messages"].append({"message": message, "category": category})
 
 
 def get_flashed_messages(request: Request):
-    print(request.session)
+    """geting flash massage if there is any"""
     return request.session.pop("_messages") if "_messages" in request.session else []
